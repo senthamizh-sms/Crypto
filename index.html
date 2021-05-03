@@ -28,7 +28,17 @@ float: left;
 <body onload="initiate()">
 <label>Buy value</label><input type="text" id="MinValue"/>
 <label>Sell value</label><input type="text" id="MaxValue"/>
+<label>Select Currency</label>
+<select type="text" id="Currency" onchange="currencychange(this)">
+<option value="BTC">BTC</option>
+<option value="ETH">ETH</option>
+<option value="BNB">BNB</option>
+<option value="TRX">TRX</option>
+<option value="XRP">XRP</option>
+<option value="MATIC">MATIC</option>
+</select>
 <div>
+<a id="tradelink" href="https://in.tradingview.com/symbols/BTCUSD/" target="_blank">View Here</a>
 <div id="TradeDetails" style="font-size: 88px;float: left;">
 
 </div>
@@ -56,19 +66,28 @@ var maxalertcontroller=true;
 var buycls="";
 var sellcls="";
 var buyprice=0;
+var currency="BTC";
+function currencychange(e){
+	currency=document.getElementById("Currency").value
+
+document.getElementById("tradelink").setAttribute("href","https://in.tradingview.com/symbols/"+currency+"USD/")
+}
 function checktrade(){
 
 
  $.ajax({       
-       url: "https://www.zebapi.com/pro/v1/market/BTC-INR/ticker",   
+       url: "https://www.zebapi.com/pro/v1/market/"+currency+"-INR/ticker",   
        type: "GET", 
        contentType: "application/json;odata=verbose",
        headers: { 
           "Accept": "application/json;odata=verbose",          
        },   
        success: function(data,status){
+		   var buy=numberWithCommas(data.buy);
+			var sell=numberWithCommas(data.sell)
       //  console.log("bid value: "+parseInt(data.buy)+" Min Value: "+parseInt($("#MinValue").val())+" Max value:"+parseInt($("#MaxValue").val()))
        buyprice=parseInt(data.buy);
+	   document.getElementsByTagName("title")[0].text=buy+" | "+sell
 if(parseInt(data.buy) < parseInt($("#MinValue").val()))
 {
 	
@@ -96,26 +115,33 @@ if(parseInt(data.sell) > parseInt($("#MaxValue").val())){
 	sellcls="";
 }
 //console.log(cls);
-var buy=numberWithCommas(data.buy);
-var sell=numberWithCommas(data.sell)
-	 var t="<span class='"+buycls+"'>BUY="+buy+"</span><br/>"
-            +"<span class='"+sellcls+"'>SELL="+sell+"</span><br/>"
+
+	 var t="<span id='buyamount' class='"+buycls+"'>BUY="+buy+"</span><br/>"
+            +"<span id='sellamount' class='"+sellcls+"'>SELL="+sell+"</span><br/>"
 			    +"<span '>24-Hours High="+numberWithCommas(data["24hoursHigh"])+"</span><br/>"
 				 +"<span>24-Hours Low="+numberWithCommas(data["24hoursLow"])+"</span><br/>"
 			 +"<span>Pricechange="+data.pricechange+"</span><br/>"
 			+"<span>Volume="+data.volume+"</span><br/>";
         $("#TradeDetails").empty();
     $("#TradeDetails").append(t);
-$(document).attr("title",buy+" | "+sell)
+	//$(document).attr("title","")
+//$(document).attr("title",buy+" | "+sell)
+//console.log()
+
 },
 
-    });
+    }).done(function(d,s){
+		  
+    
+	   
+
+	})
 }
 function getbooks(){
 
 
  $.ajax({       
-       url: "https://www.zebapi.com/pro/v1/market/BTC-INR/book",   
+       url: "https://www.zebapi.com/pro/v1/market/"+currency+"-INR/book",   
        type: "GET", 
        contentType: "application/json;odata=verbose",
        headers: { 
@@ -143,7 +169,7 @@ function gethistory(){
 
 
  $.ajax({       
-       url: "https://www.zebapi.com/pro/v1/market/BTC-INR/trades",   
+       url: "https://www.zebapi.com/pro/v1/market/"+currency+"-INR/trades",   
        type: "GET", 
        contentType: "application/json;odata=verbose",
        headers: { 
@@ -154,7 +180,7 @@ function gethistory(){
       //  console.log("bid value: "+parseInt(data.buy)+" Min Value: "+parseInt($("#MinValue").val())+" Max value:"+parseInt($("#MaxValue").val()))
   var htmlbooks="";     
 for(var i=0;i<data.length;i++){
-	if(parseInt(data[i].fill_flags) ===  1){
+	if(parseInt(data[i].fill_flags) !==  1){
 	htmlbooks+="<li class='green'>price: "+numberWithCommas(data[i].fill_price)+" | amount: "+data[i].fill_qty+" | "+gettime(data[i].lastModifiedDate)+"</li>";
 	}else{
 		htmlbooks+="<li class='red'>price: "+numberWithCommas(data[i].fill_price)+" | amount: "+data[i].fill_qty+" | "+gettime(data[i].lastModifiedDate)+"</li>";
@@ -183,6 +209,11 @@ function initiate(){
 var destroyer=setInterval(checktrade,1000);
 var booksdestroyer=setInterval(getbooks,1000);
 var historydestroyer=setInterval(gethistory,1000);
+setInterval(function(){
+	 var buy=$("#buyamount").text().split("=")[1]
+			var sell=$("#sellamount").text().split("=")[1]
+	document.getElementsByTagName("title")[0].text=buy+" | "+sell
+},500)
 }
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -209,6 +240,18 @@ rettext= parseInt((diff/3600000)).toString() +" h";
 }
 return rettext;
 }
+/*setInterval(function(){
+var titletxt="";
+if($("#USD_INR-img-div").find("div:not('.hidden')").attr("class") == "img-dash"){
+    titletxt+="=";
+}else if($("#USD_INR-img-div").find("div:not('.hidden')").attr("class") == "img-down"){
+    titletxt+="Down";
+}else{
+    titletxt+="Up";
+}
+titletxt+="  ||  "+$("#USD_INR-a-int").text()+$("#USD_INR-a-pip").text();
+$(document).attr("title",titletxt)
+},1000)*/
 </script>
 
 </body>
