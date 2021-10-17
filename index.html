@@ -39,8 +39,8 @@ float: left;
 <body onload="initiate()">
 <label>Buy value</label><input type="text" id="MinValue"/>
 <label>Sell value</label><input type="text" id="MaxValue"/>
-<label>Select Currency</label>
-<!--<select type="text" id="Currency" onchange="">
+<!--<label>Select Currency</label>
+<select type="text" id="Currency" onchange="">
 <option value="BTC">BTC</option>
 <option value="ETH">ETH</option>
 <option value="BNB">BNB</option>
@@ -94,7 +94,7 @@ var sellcls="";
 var buyprice=0;
 var currency="BTC";
 function currencychange(e){
-	e.preventDefault();
+	
 	currency=e.getAttribute("currency");
 
 document.getElementById("tradelink").setAttribute("href","https://in.tradingview.com/symbols/"+currency+"USD/")
