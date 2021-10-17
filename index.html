@@ -32,6 +32,9 @@ float: left;
     line-height: 25px;
 		text-decoration: none;
 	}
+	.active{
+        color:#0f71eb !important;
+    }
 </style>
 <script src="js/modernizr.js"></script>
 </head>	
@@ -96,7 +99,11 @@ var currency="BTC";
 function currencychange(e){
 	
 	currency=e.getAttribute("currency");
-
+var t=document.getElementsByClassName("cryptochanger");
+for(i=0;i< t.length;i++){
+    t[i].className =t[i].className.replace(" active","")
+}
+	e.className +=" active"
 document.getElementById("tradelink").setAttribute("href","https://in.tradingview.com/symbols/"+currency+"USD/")
 }
 function checktrade(){
