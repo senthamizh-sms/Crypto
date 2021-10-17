@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>JLL Office Property Clock</title>
+<title>Cryptography</title>
 <link rel="stylesheet" href="css/style.css" type="text/css"/>
 <link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
 <style type="text/css">
@@ -29,7 +29,7 @@ float: left;
 <label>Buy value</label><input type="text" id="MinValue"/>
 <label>Sell value</label><input type="text" id="MaxValue"/>
 <label>Select Currency</label>
-<select type="text" id="Currency" onchange="currencychange(this)">
+<select type="text" id="Currency" onchange="">
 <option value="BTC">BTC</option>
 <option value="ETH">ETH</option>
 <option value="BNB">BNB</option>
@@ -40,6 +40,7 @@ float: left;
 <option value="PUSH">PUSH</option>
 <option value="DOGE">GOGECOIN</option>
 </select>
+	<div> <a href="#" onclick="currencychange(this)" currency="BTC" class="cryptochanger">Bitcoin</a></div>
 <div>
 <a id="tradelink" href="https://in.tradingview.com/symbols/BTCUSD/" target="_blank">View Here</a>
 <div id="TradeDetails" style="font-size: 88px;float: left;">
@@ -71,7 +72,8 @@ var sellcls="";
 var buyprice=0;
 var currency="BTC";
 function currencychange(e){
-	currency=document.getElementById("Currency").value
+	e.preventDefault();
+	currency=e.getAttribute("currency");
 
 document.getElementById("tradelink").setAttribute("href","https://in.tradingview.com/symbols/"+currency+"USD/")
 }
