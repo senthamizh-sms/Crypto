@@ -20,7 +20,18 @@ float: left;
     width: 400px;
     font-size: 17px;
 }
-
+	.cryptochanger{
+		    width: 43px;
+    height: 6px;
+    background: #38a741;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+		text-decoration: none;
+	}
 </style>
 <script src="js/modernizr.js"></script>
 </head>	
@@ -29,7 +40,7 @@ float: left;
 <label>Buy value</label><input type="text" id="MinValue"/>
 <label>Sell value</label><input type="text" id="MaxValue"/>
 <label>Select Currency</label>
-<select type="text" id="Currency" onchange="">
+<!--<select type="text" id="Currency" onchange="">
 <option value="BTC">BTC</option>
 <option value="ETH">ETH</option>
 <option value="BNB">BNB</option>
@@ -39,8 +50,19 @@ float: left;
 <option value="GRT">GRAPH</option>
 <option value="PUSH">PUSH</option>
 <option value="DOGE">GOGECOIN</option>
-</select>
-	<div> <a href="#" onclick="currencychange(this)" currency="BTC" class="cryptochanger">Bitcoin</a></div>
+</select>-->
+	<div style="margin-top:12px"> 
+		<a href="#" onclick="currencychange(this)" currency="BTC" class="cryptochanger">Bitcoin</a>
+		<a href="#" onclick="currencychange(this)" currency="ETH" class="cryptochanger">Ethereum</a>
+		<a href="#" onclick="currencychange(this)" currency="BNB" class="cryptochanger">Binance Coin</a>
+		<a href="#" onclick="currencychange(this)" currency="TRX" class="cryptochanger">Bitcoin</a>
+		<a href="#" onclick="currencychange(this)" currency="XRP" class="cryptochanger">Ripple</a>
+		<a href="#" onclick="currencychange(this)" currency="MATIC" class="cryptochanger">Polygon</a>
+		<a href="#" onclick="currencychange(this)" currency="GRT" class="cryptochanger">Graph</a>
+		<a href="#" onclick="currencychange(this)" currency="PUSH" class="cryptochanger">Push</a>
+		<a href="#" onclick="currencychange(this)" currency="DOGE" class="cryptochanger">Dogecoin</a>
+		<a href="#" onclick="currencychange(this)" currency="SHIB" class="cryptochanger">Shib Inu</a>
+	</div>
 <div>
 <a id="tradelink" href="https://in.tradingview.com/symbols/BTCUSD/" target="_blank">View Here</a>
 <div id="TradeDetails" style="font-size: 88px;float: left;">
